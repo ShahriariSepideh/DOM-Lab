@@ -1,0 +1,43 @@
+body {
+    font-family: sans-serif;
+    direction: rtl;
+    margin: 40px;
+}
+
+input, button {
+    margin: 5px;
+    padding: 6px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px;
+    text-align: center;
+}
+
+#calculator button {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    margin: 2px;
+}
+
+#calc-display {
+    width: 212px;
+    height: 40px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+#form-msg {
+    color: red;
+}
+
+#clear-btn {
+    width: 212px;
+    background: #f66;
+    color: white;
+}
