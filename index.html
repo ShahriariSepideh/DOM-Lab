@@ -1,61 +1,123 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html dir="rtl" lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>تمرین DOM و Validation</title>
-    <link rel="stylesheet" href="style.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>تمرین DOM - نسخه ریسپانسیو</title>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
-<h2>ایجاد جدول پویا</h2>
-تعداد ردیف: <input type="number" id="rows">
-تعداد ستون: <input type="number" id="cols">
-<button onclick="createTable()">ایجاد جدول</button>
+<div class="container">
 
-<div id="table-area"></div>
+    <header class="header">
+        <h1>DOM LAB</h1>
+    </header>
 
-<hr>
+    <!-- بخش اصلی با چیدمان ریسپانسیو -->
+    <main class="main-content">
 
-<h2>فرم با اعتبارسنجی</h2>
-<form onsubmit="validateForm(event)">
-    نام کاربری: <input type="text" id="username"><br>
-    رمز عبور: <input type="password" id="password"><br>
-    <button type="submit">ارسال</button>
-</form>
-<p id="form-msg"></p>
+        <!-- ردیف اول: در دسکتاپ فرم و ماشین حساب کنار هم -->
+        <div class="row">
 
-<hr>
+            <!-- ستون فرم -->
+            <div class="col col-12 col-md-12 col-lg-6">
+                <section class="card form-section">
+                    <h2 class="card-title">فرم ثبت نام</h2>
 
-<h2>ماشین حساب</h2>
-<div id="calculator">
-    <input type="text" id="calc-display" disabled>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="username">نام کاربری</label>
+                            <input autocomplete="username" id="username" placeholder="حداقل ۵ کاراکتر" type="text">
+                            <small class="form-text">نام کاربری باید حداقل ۵ کاراکتر باشد</small>
+                        </div>
 
-    <br>
-    <button onclick="press('7')">7</button>
-    <button onclick="press('8')">8</button>
-    <button onclick="press('9')">9</button>
-    <button onclick="press('/')">/</button>
-    <br>
+                        <div class="form-group">
+                            <label for="password">رمز عبور</label>
+                            <input autocomplete="new-password" id="password" placeholder="رمز قوی وارد کنید"
+                                   type="password">
+                            <small class="form-text">باید شامل حرف بزرگ، کوچک و عدد باشد</small>
+                        </div>
 
-    <button onclick="press('4')">4</button>
-    <button onclick="press('5')">5</button>
-    <button onclick="press('6')">6</button>
-    <button onclick="press('*')">*</button>
-    <br>
+                        <button class="btn btn-success btn-block" type="submit">ثبت نام</button>
+                    </form>
 
-    <button onclick="press('1')">1</button>
-    <button onclick="press('2')">2</button>
-    <button onclick="press('3')">3</button>
-    <button onclick="press('-')">-</button>
-    <br>
+                    <div class="message" id="formMessage"></div>
+                </section>
+            </div>
 
-    <button onclick="press('0')">0</button>
-    <button onclick="press('.')">.</button>
-    <button onclick="calculate()">=</button>
-    <button onclick="press('+')">+</button>
-    <br>
+            <!-- ستون ماشین حساب -->
+            <div class="col col-12 col-md-12 col-lg-6">
+                <section class="card calc-section">
+                    <h2 class="card-title">ماشین حساب</h2>
 
-    <button onclick="clearCalc()" id="clear-btn">پاک کردن</button>
+                    <div class="calculator">
+                        <input id="calcDisplay" readonly type="text" value="0">
+
+                        <div class="calc-buttons">
+                            <button class="calc-btn gray wide" data-action="clear">C</button>
+                            <button class="calc-btn gray" data-action="backspace">⌫</button>
+                            <button class="calc-btn orange" data-operator="/">÷</button>
+
+                            <button class="calc-btn" data-number="7">7</button>
+                            <button class="calc-btn" data-number="8">8</button>
+                            <button class="calc-btn" data-number="9">9</button>
+                            <button class="calc-btn orange" data-operator="*">×</button>
+
+                            <button class="calc-btn" data-number="4">4</button>
+                            <button class="calc-btn" data-number="5">5</button>
+                            <button class="calc-btn" data-number="6">6</button>
+                            <button class="calc-btn orange" data-operator="-">−</button>
+
+                            <button class="calc-btn" data-number="1">1</button>
+                            <button class="calc-btn" data-number="2">2</button>
+                            <button class="calc-btn" data-number="3">3</button>
+                            <button class="calc-btn orange" data-operator="+">+</button>
+
+                            <button class="calc-btn wide" data-number="0">0</button>
+                            <button class="calc-btn" data-number=".">.</button>
+                            <button class="calc-btn orange tall" data-action="equals">=</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div> <!-- پایان ردیف اول -->
+
+        <!-- ردیف دوم: جدول پویا -->
+        <div class="row">
+            <div class="col col-12">
+                <section class="card table-section">
+                    <h2 class="card-title">ایجاد جدول پویا</h2>
+
+                    <div class="controls">
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <label for="rows">تعداد ردیف</label>
+                                <input id="rows" max="50" min="1" type="number">
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="cols">تعداد ستون</label>
+                                <input id="cols" max="50" min="1" type="number">
+                            </div>
+
+                            <button class="btn btn-primary" id="createTable">ساخت جدول</button>
+                        </div>
+                    </div>
+
+                    <div class="table-area" id="tableContainer"></div>
+                </section>
+            </div>
+        </div> <!-- پایان ردیف دوم -->
+
+    </main>
+
+    <!-- فوتر -->
+    <footer class="footer">
+        <p>طراحی شده توسط سپیده شهریاری</p>
+    </footer>
+
 </div>
 
 <script src="script.js"></script>

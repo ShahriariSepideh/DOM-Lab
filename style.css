@@ -1,43 +1,475 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     direction: rtl;
-    margin: 40px;
+    background: linear-gradient(135deg, #8eb280 0%, #fdfdfd 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 10px;
 }
 
-input, button {
-    margin: 5px;
-    padding: 6px;
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px;
 }
 
-table, td, th {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 8px;
+/* استایل container جدول وقتی خالی است */
+#tableContainer {
+    min-height: 200px;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #718096;
+    font-size: 1.1rem;
+
+}
+
+/* وقتی جدول خالی است، متن راهنما نشان بده */
+#tableContainer:empty::before {
+    content: 'جدول اینجا نمایش داده می‌شود';
+    padding: 20px;
     text-align: center;
 }
 
-#calculator button {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-    margin: 2px;
-}
-
-#calc-display {
-    width: 212px;
-    height: 40px;
-    font-size: 22px;
-    margin-bottom: 10px;
-    text-align: right;
-    padding-right: 10px;
-}
-
-#form-msg {
-    color: red;
-}
-
-#clear-btn {
-    width: 212px;
-    background: #f66;
+#createTable {
+    background: steelblue;
     color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+#createTable:hover {
+    background: #ce8526;
+    box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.col {
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+/* موبایل */
+.col-12 {
+    width: 100%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+/* تبلت */
+@media (min-width: 768px) {
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+}
+
+/* دسکتاپ */
+@media (min-width: 992px) {
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .col-lg-6 {
+        width: 50%;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #2d3748;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #718096;
+    font-size: 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #2d3748;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #4299e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    background: white;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.form-text {
+    display: block;
+    margin-top: 6px;
+    color: #718096;
+    font-size: 0.8rem;
+}
+
+.calculator {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+#calcDisplay {
+    width: 100%;
+    height: 60px;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    text-align: right;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    color: #2d3748;
+    direction: ltr;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+/* دکمه‌های ماشین حساب */
+.calc-btn {
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+}
+
+.calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calc-btn:active {
+    transform: translateY(0);
+}
+
+.calc-btn.wide {
+    grid-column: span 2;
+}
+
+.calc-btn.tall {
+    grid-row: span 2;
+}
+
+/* رنگ‌های دکمه‌ها */
+.calc-btn.orange {
+    background: #ed8936;
+    color: white;
+}
+
+.calc-btn.orange:hover {
+    background: #dd6b20;
+}
+
+.calc-btn.gray {
+    background: #cbd5e0;
+    color: #2d3748;
+}
+
+.calc-btn.gray:hover {
+    background: #a0aec0;
+}
+
+/* دکمه‌های عددی */
+.calc-btn:not(.orange):not(.gray) {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.calc-btn:not(.orange):not(.gray):hover {
+    background: #e2e8f0;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.input-wrapper {
+    flex: 1;
+    min-width: 120px;
+}
+
+.input-wrapper label {
+    display: block;
+    margin-bottom: 6px;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.table-area {
+    margin-top: 15px;
+    overflow-x: auto;
+    min-height: 100px;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    min-width: 400px;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s;
+}
+
+th {
+    background: #4299e1;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+td {
+    background: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+tr:nth-child(even) td {
+    background: #f8fafc;
+}
+
+tr:hover td {
+    background: #ebf8ff;
+}
+
+td:active {
+    background: #4299e1 !important;
+    color: white;
+    transition: none;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-primary {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #3182ce;
+}
+
+.btn-success {
+    background: #48bb78;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #38a169;
+}
+
+.message {
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    color: #4a5568;
+}
+
+/*  تبلت */
+@media (min-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .calc-buttons {
+        gap: 6px;
+    }
+
+    .calc-btn {
+        padding: 14px 0;
+        font-size: 1.2rem;
+    }
+}
+
+/* دسکتاپ */
+@media (min-width: 900px) {
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        padding: 30px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .calc-btn {
+        padding: 16px 0;
+        font-size: 1.3rem;
+    }
+
+    #calcDisplay {
+        height: 70px;
+        font-size: 2rem;
+    }
 }
