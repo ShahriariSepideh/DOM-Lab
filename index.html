@@ -2,8 +2,8 @@
 <html dir="rtl" lang="fa">
 <head>
     <meta charset="UTF-8">
+    <title>DOM Practice</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>تمرین DOM - نسخه ریسپانسیو</title>
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -14,109 +14,84 @@
         <h1>DOM LAB</h1>
     </header>
 
-    <!-- بخش اصلی با چیدمان ریسپانسیو -->
     <main class="main-content">
 
-        <!-- ردیف اول: در دسکتاپ فرم و ماشین حساب کنار هم -->
         <div class="row">
 
-            <!-- ستون فرم -->
-            <div class="col col-12 col-md-12 col-lg-6">
-                <section class="card form-section">
-                    <h2 class="card-title">فرم ثبت نام</h2>
+            <!-- Form -->
+            <div class="col col-lg-6">
+                <section class="card">
+                    <h2>Signup Form</h2>
 
                     <form id="signupForm">
                         <div class="form-group">
-                            <label for="username">نام کاربری</label>
-                            <input autocomplete="username" id="username" placeholder="حداقل ۵ کاراکتر" type="text">
-                            <small class="form-text">نام کاربری باید حداقل ۵ کاراکتر باشد</small>
+                            <label for="username">Username</label>
+                            <input id="username" placeholder="Enter username" type="text">
                         </div>
 
                         <div class="form-group">
-                            <label for="password">رمز عبور</label>
-                            <input autocomplete="new-password" id="password" placeholder="رمز قوی وارد کنید"
-                                   type="password">
-                            <small class="form-text">باید شامل حرف بزرگ، کوچک و عدد باشد</small>
+                            <label for="password">Password</label>
+                            <input id="password" placeholder="Enter password" type="password">
                         </div>
 
-                        <button class="btn btn-success btn-block" type="submit">ثبت نام</button>
+                        <button class="btn btn-success" type="submit">Submit</button>
                     </form>
 
                     <div class="message" id="formMessage"></div>
                 </section>
             </div>
 
-            <!-- ستون ماشین حساب -->
-            <div class="col col-12 col-md-12 col-lg-6">
-                <section class="card calc-section">
-                    <h2 class="card-title">ماشین حساب</h2>
+            <!-- Calculator -->
+            <div class="col col-lg-6">
+                <section class="card">
+                    <h2>Calculator</h2>
 
                     <div class="calculator">
-                        <input id="calcDisplay" readonly type="text" value="0">
+                        <input id="calcDisplay" readonly value="0">
 
                         <div class="calc-buttons">
-                            <button class="calc-btn gray wide" data-action="clear">C</button>
-                            <button class="calc-btn gray" data-action="backspace">⌫</button>
-                            <button class="calc-btn orange" data-operator="/">÷</button>
+                            <button data-action="clear">C</button>
+                            <button data-action="backspace">⌫</button>
+                            <button data-operator="/">÷</button>
+                            <button data-operator="*">×</button>
 
-                            <button class="calc-btn" data-number="7">7</button>
-                            <button class="calc-btn" data-number="8">8</button>
-                            <button class="calc-btn" data-number="9">9</button>
-                            <button class="calc-btn orange" data-operator="*">×</button>
+                            <button data-number="7">7</button>
+                            <button data-number="8">8</button>
+                            <button data-number="9">9</button>
+                            <button data-operator="-">−</button>
 
-                            <button class="calc-btn" data-number="4">4</button>
-                            <button class="calc-btn" data-number="5">5</button>
-                            <button class="calc-btn" data-number="6">6</button>
-                            <button class="calc-btn orange" data-operator="-">−</button>
+                            <button data-number="4">4</button>
+                            <button data-number="5">5</button>
+                            <button data-number="6">6</button>
+                            <button data-operator="+">+</button>
 
-                            <button class="calc-btn" data-number="1">1</button>
-                            <button class="calc-btn" data-number="2">2</button>
-                            <button class="calc-btn" data-number="3">3</button>
-                            <button class="calc-btn orange" data-operator="+">+</button>
+                            <button data-number="1">1</button>
+                            <button data-number="2">2</button>
+                            <button data-number="3">3</button>
+                            <button class="tall" data-action="equals">=</button>
 
-                            <button class="calc-btn wide" data-number="0">0</button>
-                            <button class="calc-btn" data-number=".">.</button>
-                            <button class="calc-btn orange tall" data-action="equals">=</button>
+                            <button class="wide" data-number="0">0</button>
+                            <button data-number=".">.</button>
                         </div>
                     </div>
                 </section>
             </div>
 
-        </div> <!-- پایان ردیف اول -->
+        </div>
 
-        <!-- ردیف دوم: جدول پویا -->
-        <div class="row">
-            <div class="col col-12">
-                <section class="card table-section">
-                    <h2 class="card-title">ایجاد جدول پویا</h2>
+        <!-- Table Generator -->
+        <section class="card">
+            <h2>Dynamic Table Generator</h2>
 
-                    <div class="controls">
-                        <div class="input-group">
-                            <div class="input-wrapper">
-                                <label for="rows">تعداد ردیف</label>
-                                <input id="rows" max="50" min="1" type="number">
-                            </div>
-
-                            <div class="input-wrapper">
-                                <label for="cols">تعداد ستون</label>
-                                <input id="cols" max="50" min="1" type="number">
-                            </div>
-
-                            <button class="btn btn-primary" id="createTable">ساخت جدول</button>
-                        </div>
-                    </div>
-
-                    <div class="table-area" id="tableContainer"></div>
-                </section>
+            <div class="controls">
+                <input id="rows" max="50" min="1" placeholder="Rows" type="number">
+                <input id="cols" max="20" min="1" placeholder="Columns" type="number">
+                <button class="btn btn-primary" id="createTable">Create Table</button>
             </div>
-        </div> <!-- پایان ردیف دوم -->
 
+            <div id="tableContainer"></div>
+        </section>
     </main>
-
-    <!-- فوتر -->
-    <footer class="footer">
-        <p>طراحی شده توسط سپیده شهریاری</p>
-    </footer>
 
 </div>
 

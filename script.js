@@ -1,317 +1,433 @@
-const TableGenerator = {
-    init() {
-        this.createBtn = document.getElementById('createTable');
-        this.rowsInput = document.getElementById('rows');
-        this.colsInput = document.getElementById('cols');
-        this.container = document.getElementById('tableContainer');
+document.addEventListener('DOMContentLoaded', () => {
+    FormValidator.init();
+    Calculator.init();
+    TableGenerator.init();
+});
 
-
-        this.createBtn.addEventListener('click', () => this.create());
-    },
-
-    create() {
-        // گرفتن مقادیر
-        const rows = parseInt(this.rowsInput.value) || 2;
-        const cols = parseInt(this.colsInput.value) || 2;
-
-        // اعتبارسنجی
-        if (rows < 1 || cols < 1) {
-            alert('لطفاً عدد مثبت وارد کنید');
-            return;
-        }
-
-        // اگر قبلاً جدولی هست، پاکش کن
-        this.container.innerHTML = '';
-
-        // ساخت HTML جدول
-        let table = '<table><thead><tr><th>#</th>';
-
-        // سرستون‌ها
-        for (let j = 1; j <= cols; j++) {
-            table += `<th>ستون ${j}</th>`;
-        }
-        table += '</tr></thead><tbody>';
-
-        // ردیف‌ها و ستون‌ها
-        for (let i = 1; i <= rows; i++) {
-            table += `<tr><th>ردیف ${i}</th>`;
-            for (let j = 1; j <= cols; j++) {
-                table += `<td onclick="this.style.background='#4299e1'; setTimeout(() => this.style.background='', 500)">(${i},${j})</td>`;
-            }
-            table += '</tr>';
-        }
-
-        table += '</tbody></table>';
-
-        // نمایش جدول
-        this.container.innerHTML = table;
-
-        // پیام موفقیت
-        this.showMessage(`جدول ${rows}×${cols} ساخته شد`);
-    },
-
-    showMessage(text) {
-        // ایجاد یک پیام موقت
-        const messageDiv = document.createElement('div');
-        messageDiv.textContent = text;
-        messageDiv.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #48bb78;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 1000;
-        `;
-        document.body.appendChild(messageDiv);
-
-        // بعد از 3 ثانیه پیام رو پاک کن
-        setTimeout(() => {
-            messageDiv.remove();
-        }, 3000);
-    }
-};
-
-// اعتبارسنج فرم
+/* فرم ثبت‌نام */
 const FormValidator = {
     init() {
         this.form = document.getElementById('signupForm');
-        this.usernameInput = document.getElementById('username');
-        this.passwordInput = document.getElementById('password');
-        this.messageEl = document.getElementById('formMessage');
+        this.username = document.getElementById('username');
+        this.password = document.getElementById('password');
+        this.message = document.getElementById('formMessage');
 
-        // وقتی فرم ارسال شد
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener('submit', e => {
             e.preventDefault();
             this.validate();
         });
 
-        // اعتبارسنجی لحظه‌ای
-        this.addRealTimeValidation();
+        // مخفی کردن پیام در ابتدا
+        this.message.style.display = 'none';
     },
 
     validate() {
-        // پاک کردن خطاهای قبلی
-        this.clearAllErrors();
+        const username = this.username.value.trim();
+        const password = this.password.value.trim();
 
-        // گرفتن مقادیر
-        const username = this.usernameInput.value.trim();
-        const password = this.passwordInput.value;
-
-        // فلگ برای تشخیص خطا
-        let hasError = false;
+        // همیشه پیام را نشان بده
+        this.message.style.display = 'block';
+        this.message.style.padding = '12px 15px';
+        this.message.style.borderRadius = '6px';
+        this.message.style.marginTop = '15px';
 
         // اعتبارسنجی نام کاربری
-        if (username === "") {
-            this.showFieldError(this.usernameInput, "نام کاربری نمی‌تواند خالی باشد");
-            hasError = true;
-        } else if (username.length < 5) {
-            this.showFieldError(this.usernameInput, "نام کاربری باید حداقل ۵ حرف باشد");
-            hasError = true;
+        if (username.length < 5) {
+            this.message.textContent = 'Username must be at least 5 characters long.';
+            this.message.style.backgroundColor = '#fef2f2';
+            this.message.style.color = '#dc2626';
+            this.message.style.border = '1px solid #fecaca';
+            return false;
         }
 
         // اعتبارسنجی رمز عبور
-        if (password === "") {
-            this.showFieldError(this.passwordInput, "رمز عبور نمی‌تواند خالی باشد");
-            hasError = true;
-        } else if (password.length < 6) {
-            this.showFieldError(this.passwordInput, "رمز عبور باید حداقل ۶ حرف باشد");
-            hasError = true;
-        } else {
-            // بررسی حروف بزرگ، کوچک و عدد
-            const hasUpper = /[A-Z]/.test(password);
-            const hasLower = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
 
-            if (!hasUpper || !hasLower || !hasNumber) {
-                this.showFieldError(this.passwordInput, "رمز باید شامل حرف بزرگ، کوچک و عدد باشد");
-                hasError = true;
-            }
+        if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+            this.message.textContent = 'Password must contain at least one uppercase letter, one lowercase letter, and one number.';
+            this.message.style.backgroundColor = '#fef2f2';
+            this.message.style.color = '#dc2626';
+            this.message.style.border = '1px solid #fecaca';
+            return false;
         }
 
-        // اگر خطایی بود
-        if (hasError) {
-            // اولین فیلد خطادار رو فوکوس کن
-            const firstErrorInput = this.form.querySelector('.input-error');
-            if (firstErrorInput) {
-                firstErrorInput.focus();
-            }
-            return;
-        }
+        // موفقیت‌آمیز
+        this.message.textContent = 'Form submitted successfully!';
+        this.message.style.backgroundColor = '#f0fdf4';
+        this.message.style.color = '#16a34a';
+        this.message.style.border = '1px solid #bbf7d0';
 
-        // اگر همه چیز درست بود
-        this.showSuccess(' ثبت ‌نام با موفقیت انجام شد!');
-
-        // بعد از ۳ ثانیه فرم رو پاک کن
-        setTimeout(() => {
-            this.form.reset();
-            this.messageEl.textContent = '';
-            this.messageEl.className = 'message';
-            this.clearAllErrors(); // خطاها رو هم پاک کن
-        }, 3000);
-    },
-
-    // نمایش خطا برای یک فیلد
-    showFieldError(inputElement, message) {
-        // اضافه کردن کلاس خطا به input
-        inputElement.classList.add('input-error');
-
-        // ایجاد عنصر پیام خطا
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'field-error';
-        errorDiv.textContent = message;
-        errorDiv.style.cssText = `
-            color: #e53e3e;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        `;
-
-        errorDiv.innerHTML = ` ${message}`;
-
-        // قرار دادن پیام خطا بعد از input
-        inputElement.parentNode.appendChild(errorDiv);
-
-        // تغییر استایل input
-        inputElement.style.borderColor = '#e53e3e';
-        inputElement.style.boxShadow = '0 0 0 3px rgba(229, 62, 62, 0.1)';
-    },
-
-    // پاک کردن همه خطاها
-    clearAllErrors() {
-        // پاک کردن کلاس‌های خطا از inputها
-        this.usernameInput.classList.remove('input-error');
-        this.passwordInput.classList.remove('input-error');
-
-        // برگرداندن استایل اصلی inputها
-        this.usernameInput.style.borderColor = '';
-        this.usernameInput.style.boxShadow = '';
-        this.passwordInput.style.borderColor = '';
-        this.passwordInput.style.boxShadow = '';
-
-        // حذف پیام‌های خطای قبلی
-        const errorMessages = this.form.querySelectorAll('.field-error');
-        errorMessages.forEach(error => error.remove());
-
-        // پاک کردن پیام کلی
-        this.messageEl.textContent = '';
-        this.messageEl.className = 'message';
-    },
-
-    // نمایش پیام موفقیت
-    showSuccess(message) {
-        this.messageEl.textContent = message;
-        this.messageEl.className = 'message success';
-        this.messageEl.style.cssText = `
-            background-color: #c6f6d5;
-            color: #22543d;
-            border: 2px solid #9ae6b4;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 20px;
-            text-align: center;
-            font-weight: 600;
-        `;
-    },
-
-    // اعتبارسنجی لحظه‌ا
-    addRealTimeValidation() {
-        // وقتی کاربر تایپ می‌کند، خطاها رو پاک کن
-        this.usernameInput.addEventListener('input', () => {
-            if (this.usernameInput.value.trim() !== "") {
-                this.usernameInput.classList.remove('input-error');
-                this.usernameInput.style.borderColor = '';
-                const error = this.usernameInput.parentNode.querySelector('.field-error');
-                if (error) error.remove();
-            }
-        });
-
-        this.passwordInput.addEventListener('input', () => {
-            if (this.passwordInput.value !== "") {
-                this.passwordInput.classList.remove('input-error');
-                this.passwordInput.style.borderColor = '';
-                const error = this.passwordInput.parentNode.querySelector('.field-error');
-                if (error) error.remove();
-            }
-        });
+        // ریست کردن فرم
+        this.form.reset();
+        return true;
     }
 };
 
-// ماشین حساب
+/* ماشین حساب */
 const Calculator = {
-    current: '0', previous: '', operator: '',
+    current: '0', previous: '', operator: '', waitingForNewNumber: false,
 
     init() {
         this.display = document.getElementById('calcDisplay');
 
-        // دکمه‌های عدد
-        document.querySelectorAll('[data-number]').forEach(btn => {
-            btn.addEventListener('click', () => this.addNumber(btn.dataset.number));
-        });
+        // اعداد
+        document.querySelectorAll('[data-number]')
+            .forEach(btn => btn.onclick = () => this.addNumber(btn.dataset.number));
 
         // عملگرها
-        document.querySelectorAll('[data-operator]').forEach(btn => {
-            btn.addEventListener('click', () => this.setOperator(btn.dataset.operator));
-        });
+        document.querySelectorAll('[data-operator]')
+            .forEach(btn => btn.onclick = () => this.setOperator(btn.dataset.operator));
 
-        // دکمه C
-        document.querySelector('[data-action="clear"]').addEventListener('click', () => this.clear());
+        // دکمه‌های عملیاتی
+        document.querySelector('[data-action="clear"]').onclick = () => this.clear();
+        document.querySelector('[data-action="equals"]').onclick = () => this.calculate();
+        document.querySelector('[data-action="backspace"]').onclick = () => this.backspace();
 
-        // دکمه =
-        document.querySelector('[data-action="equals"]').addEventListener('click', () => this.calculate());
+        // پشتیبانی از صفحه کلید
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+    },
 
-        this.updateDisplay();
+    handleKeyboard(e) {
+        // بررسی اینکه آیا رویداد از یک input یا textarea آمده است
+        const isInputElement = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable;
+
+        // اگر رویداد از یک فیلد ورودی آمده، آن را نادیده بگیر
+        if (isInputElement) {
+            return;
+        }
+
+        const key = e.key;
+
+        if (key >= '0' && key <= '9') {
+            this.addNumber(key);
+        } else if (key === '.') {
+            this.addNumber('.');
+        } else if (['+', '-', '*', '/'].includes(key)) {
+            e.preventDefault();
+            this.setOperator(key);
+        } else if (key === 'Enter' || key === '=') {
+            e.preventDefault();
+            this.calculate();
+        } else if (key === 'Escape' || key === 'Delete') {
+            this.clear();
+        } else if (key === 'Backspace') {
+            e.preventDefault();
+            this.backspace();
+        }
     },
 
     addNumber(num) {
-        if (this.current === '0') this.current = num; else if (num !== '.' || !this.current.includes('.')) this.current += num;
-        this.updateDisplay();
+        if (this.waitingForNewNumber) {
+            // اگر منتظر عدد جدید هستیم، نمایشگر را ریست کن
+            this.current = num;
+            this.waitingForNewNumber = false;
+        } else if (this.current === '0' && num !== '.') {
+            this.current = num;
+        } else if (num === '.' && this.current.includes('.')) {
+            return; // جلوگیری از دو نقطه
+        } else {
+            this.current += num;
+        }
+        this.update();
     },
 
     setOperator(op) {
-        if (this.previous) this.calculate();
+        // اگر قبلاً عملیاتی در حال انجام بود، ابتدا آن را محاسبه کن
+        if (this.operator && !this.waitingForNewNumber && this.previous) {
+            this.calculate();
+        }
+
+        // اگر عددی وارد شده، آن را ذخیره کن
+        if (this.current !== '0' && !this.waitingForNewNumber) {
+            this.previous = this.current;
+        }
+
         this.operator = op;
-        this.previous = this.current;
-        this.current = '0';
+        this.waitingForNewNumber = true;
+        this.update();
     },
 
     calculate() {
-        if (!this.previous || !this.operator) return;
+        if (!this.operator || !this.previous) return;
 
-        const prev = parseFloat(this.previous);
-        const curr = parseFloat(this.current);
+        const a = parseFloat(this.previous);
+        const b = parseFloat(this.current);
         let result;
 
-        if (this.operator === '+') result = prev + curr; else if (this.operator === '-') result = prev - curr; else if (this.operator === '*') result = prev * curr; else if (this.operator === '/') result = curr === 0 ? 'خطا!' : prev / curr;
+        try {
+            switch (this.operator) {
+                case '+':
+                    result = a + b;
+                    break;
+                case '-':
+                    result = a - b;
+                    break;
+                case '*':
+                    result = a * b;
+                    break;
+                case '/':
+                    if (b === 0) {
+                        this.current = 'Error';
+                        this.update();
+                        return;
+                    }
+                    result = a / b;
+                    break;
+                default:
+                    return;
+            }
 
-        this.current = result === 'خطا!' ? 'خطا!' : (Math.round(result * 100) / 100).toString();
-        this.operator = '';
-        this.previous = '';
-        this.updateDisplay();
+            // گرد کردن
+            result = Math.round(result * 10000000000) / 10000000000;
+            this.current = result.toString();
+            this.previous = '';
+            this.operator = '';
+            this.waitingForNewNumber = true;
+        } catch (error) {
+            this.current = 'Error';
+            this.previous = '';
+            this.operator = '';
+            this.waitingForNewNumber = true;
+        }
+
+        this.update();
+    },
+
+    backspace() {
+        if (this.waitingForNewNumber) return; // اگر منتظر عدد جدید هستیم، بک‌اسپس کار نکند
+
+        if (this.current.length > 1) {
+            this.current = this.current.slice(0, -1);
+        } else {
+            this.current = '0';
+        }
+        this.update();
     },
 
     clear() {
         this.current = '0';
         this.previous = '';
         this.operator = '';
-        this.updateDisplay();
+        this.waitingForNewNumber = false;
+        this.update();
     },
 
-    updateDisplay() {
+    update() {
+        // فقط مقدار فعلی را نمایش بده
         this.display.value = this.current;
+
+        // اگر عملیاتی در حال انجام است، در نمایشگر نشان بده
+        if (this.operator && this.previous) {
+            this.display.value = `${this.previous} ${this.getOperatorSymbol(this.operator)}`;
+            if (!this.waitingForNewNumber) {
+                this.display.value += ` ${this.current}`;
+            }
+        }
+
+        // تغییر رنگ نمایشگر در صورت خطا
+        if (this.current === 'Error') {
+            this.display.style.color = '#dc2626';
+            setTimeout(() => {
+                this.clear();
+                this.display.style.color = '#2d3748';
+            }, 1500);
+        } else {
+            this.display.style.color = '#2d3748';
+        }
+    },
+
+    getOperatorSymbol(op) {
+        const symbols = {
+            '+': '+', '-': '−', '*': '×', '/': '÷'
+        };
+        return symbols[op] || op;
     }
 };
 
+/* جدول پویا */
+const TableGenerator = {
+    init() {
+        this.btn = document.getElementById('createTable');
+        this.rowsInput = document.getElementById('rows');
+        this.colsInput = document.getElementById('cols');
+        this.container = document.getElementById('tableContainer');
 
+        this.btn.onclick = () => this.create();
 
-//راه‌اندازی همه
-document.addEventListener('DOMContentLoaded', () => {
-    TableGenerator.init();
-    FormValidator.init();
-    Calculator.init();
+        // پاک کردن مقادیر پیش‌فرض
+        this.rowsInput.value = '';
+        this.colsInput.value = '';
 
-    console.log(' برنامه آماده است!');
-});
+        // پیام اولیه
+        this.container.innerHTML = `
+            <div class="empty-message">
+                لطفاً تعداد ردیف‌ها و ستون‌ها را وارد کرده و روی دکمه "Create Table" کلیک کنید.
+            </div>
+        `;
+
+        // افزودن استایل به پیام اولیه
+        const style = document.createElement('style');
+        style.textContent = `
+            .empty-message {
+                padding: 40px 20px;
+                text-align: center;
+                color: #64748b;
+                font-size: 16px;
+                background-color: #f8fafc;
+                border-radius: 8px;
+                border: 2px dashed #e2e8f0;
+                margin: 20px 0;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // امکان استفاده از کلید Enter
+        this.rowsInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') this.create();
+        });
+
+        this.colsInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') this.create();
+        });
+    },
+
+    validateInputs() {
+        const rows = parseInt(this.rowsInput.value);
+        const cols = parseInt(this.colsInput.value);
+
+        // اگر هر دو فیلد خالی باشند
+        if (!this.rowsInput.value.trim() && !this.colsInput.value.trim()) {
+            this.showMessage('Please enter the number of rows and columns.', 'error');
+            this.rowsInput.focus();
+            return false;
+        }
+
+        // اگر فقط ردیف خالی باشد
+        if (!this.rowsInput.value.trim()) {
+            this.showMessage('Please enter the number of rows.', 'error');
+            this.rowsInput.focus();
+            return false;
+        }
+
+        // اگر فقط ستون خالی باشد
+        if (!this.colsInput.value.trim()) {
+            this.showMessage('Please enter the number of columns.', 'error');
+            this.colsInput.focus();
+            return false;
+        }
+
+        // اعتبارسنجی مقادیر عددی
+        if (isNaN(rows) || rows < 1) {
+            this.showMessage('Number of rows must be at least 1.', 'error');
+            this.rowsInput.focus();
+            return false;
+        }
+
+        if (isNaN(cols) || cols < 1) {
+            this.showMessage('Number of columns must be at least 1.', 'error');
+            this.colsInput.focus();
+            return false;
+        }
+
+        if (rows > 50) {
+            this.showMessage('Number of rows should not exceed 50.', 'error');
+            this.rowsInput.focus();
+            return false;
+        }
+
+        if (cols > 20) {
+            this.showMessage('Number of columns should not exceed 20.', 'error');
+            this.colsInput.focus();
+            return false;
+        }
+
+        return {rows, cols};
+    },
+
+    showMessage(message, type = 'info') {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'table-message';
+        messageDiv.textContent = message;
+        messageDiv.style.padding = '20px';
+        messageDiv.style.textAlign = 'center';
+        messageDiv.style.borderRadius = '8px';
+        messageDiv.style.margin = '20px 0';
+        messageDiv.style.fontWeight = '500';
+
+        if (type === 'error') {
+            messageDiv.style.backgroundColor = '#fef2f2';
+            messageDiv.style.color = '#dc2626';
+            messageDiv.style.border = '1px solid #fecaca';
+        } else {
+            messageDiv.style.backgroundColor = '#f0f9ff';
+            messageDiv.style.color = '#0369a1';
+            messageDiv.style.border = '1px solid #bae6fd';
+        }
+
+        this.container.innerHTML = '';
+        this.container.appendChild(messageDiv);
+    },
+
+    create() {
+        const validation = this.validateInputs();
+        if (!validation) return;
+
+        const {rows, cols} = validation;
+
+        const table = document.createElement('table');
+
+        // ایجاد سرستون‌ها
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+
+        for (let j = 0; j < cols; j++) {
+            const th = document.createElement('th');
+            th.textContent = `COLUMN ${j + 1}`;
+            headerRow.appendChild(th);
+        }
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // ایجاد بدنه جدول
+        const tbody = document.createElement('tbody');
+
+        for (let i = 0; i < rows; i++) {
+            const tr = document.createElement('tr');
+
+            tr.style.animationDelay = `${i * 0.05}s`;
+
+            for (let j = 0; j < cols; j++) {
+                const td = document.createElement('td');
+                td.textContent = `${i + 1},${j + 1}`;
+
+                td.addEventListener('click', function () {
+                    const allCells = document.querySelectorAll('td');
+                    allCells.forEach(cell => {
+                        cell.style.backgroundColor = '';
+                        cell.style.color = '#2d3748';
+                    });
+
+                    this.style.backgroundColor = '#3b82f6';
+                    this.style.color = 'white';
+                });
+
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+
+        table.appendChild(tbody);
+        this.container.innerHTML = '';
+        this.container.appendChild(table);
+
+        // نمایش اطلاعات جدول
+        const info = document.createElement('div');
+        info.className = 'table-info';
+        info.innerHTML = `Table created with <strong>${rows}</strong> rows and <strong>${cols}</strong> columns.`;
+
+        this.container.appendChild(info);
+    }
+};

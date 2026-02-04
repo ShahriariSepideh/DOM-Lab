@@ -1,379 +1,105 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    background: linear-gradient(135deg, #8eb280 0%, #fdfdfd 100%);
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-    padding: 10px;
+    background: #f1f5f9;
+    padding: 20px;
+    margin: 0;
 }
 
 .container {
-    width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 10px;
-}
-
-/* استایل container جدول وقتی خالی است */
-#tableContainer {
-    min-height: 200px;
-    background: #f8fafc;
-    border: 2px dashed #cbd5e0;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #718096;
-    font-size: 1.1rem;
-
-}
-
-/* وقتی جدول خالی است، متن راهنما نشان بده */
-#tableContainer:empty::before {
-    content: 'جدول اینجا نمایش داده می‌شود';
-    padding: 20px;
-    text-align: center;
-}
-
-#createTable {
-    background: steelblue;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-#createTable:hover {
-    background: #ce8526;
-    box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -10px;
-}
-
-.col {
-    padding: 0 10px;
-    margin-bottom: 20px;
-}
-
-/* موبایل */
-.col-12 {
-    width: 100%;
-}
-
-.col-6 {
-    width: 50%;
-}
-
-/* تبلت */
-@media (min-width: 768px) {
-    .col-md-12 {
-        width: 100%;
-    }
-
-    .col-md-6 {
-        width: 50%;
-    }
-}
-
-/* دسکتاپ */
-@media (min-width: 992px) {
-    .col-lg-12 {
-        width: 100%;
-    }
-
-    .col-lg-6 {
-        width: 50%;
-    }
+    padding: 0 15px; /* اضافه کردن padding برای فاصله از لبه‌ها */
 }
 
 .header {
     text-align: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header h1 {
+    margin: 0;
     color: #2d3748;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+    font-size: 2rem;
 }
 
-.subtitle {
-    color: #718096;
-    font-size: 1rem;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.col {
+    flex: 1;
+    min-width: 300px;
 }
 
 .card {
     background: white;
+    padding: 25px;
     border-radius: 12px;
-    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     height: 100%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
+}
+
+.card h2 {
+    margin-top: 0;
     margin-bottom: 20px;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.card-title {
-    font-size: 1.2rem;
     color: #2d3748;
-    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
     padding-bottom: 10px;
-    border-bottom: 2px solid #4299e1;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 1.5rem;
 }
 
+/* فرم */
 .form-group {
     margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
-    color: #4a5568;
+    margin-bottom: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    color: #4a5568;
 }
 
-.form-group input {
+input[type="text"],
+input[type="password"],
+input[type="number"] {
     width: 100%;
-    padding: 12px 14px;
+    padding: 12px 15px;
     border: 2px solid #e2e8f0;
     border-radius: 8px;
-    font-size: 0.95rem;
-    transition: all 0.3s;
-    background: white;
+    font-size: 16px;
+    transition: border-color 0.3s;
 }
 
-.form-group input:focus {
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
     outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    border-color: #3b82f6;
 }
 
-.form-text {
-    display: block;
-    margin-top: 6px;
-    color: #718096;
-    font-size: 0.8rem;
-}
-
-.calculator {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    border: 1px solid #e2e8f0;
-}
-
-#calcDisplay {
-    width: 100%;
-    height: 60px;
-    padding: 0 15px;
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-    text-align: right;
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    color: #2d3748;
-    direction: ltr;
-}
-
-.calc-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-}
-
-/* دکمه‌های ماشین حساب */
-.calc-btn {
-    padding: 12px 0;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-}
-
-.calc-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.calc-btn:active {
-    transform: translateY(0);
-}
-
-.calc-btn.wide {
-    grid-column: span 2;
-}
-
-.calc-btn.tall {
-    grid-row: span 2;
-}
-
-/* رنگ‌های دکمه‌ها */
-.calc-btn.orange {
-    background: #ed8936;
-    color: white;
-}
-
-.calc-btn.orange:hover {
-    background: #dd6b20;
-}
-
-.calc-btn.gray {
-    background: #cbd5e0;
-    color: #2d3748;
-}
-
-.calc-btn.gray:hover {
-    background: #a0aec0;
-}
-
-/* دکمه‌های عددی */
-.calc-btn:not(.orange):not(.gray) {
-    background: #edf2f7;
-    color: #4a5568;
-}
-
-.calc-btn:not(.orange):not(.gray):hover {
-    background: #e2e8f0;
-}
-
-.controls {
-    margin-bottom: 20px;
-}
-
-.input-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: flex-end;
-}
-
-.input-wrapper {
-    flex: 1;
-    min-width: 120px;
-}
-
-.input-wrapper label {
-    display: block;
-    margin-bottom: 6px;
-    color: #4a5568;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.input-wrapper input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-}
-
-.table-area {
-    margin-top: 15px;
-    overflow-x: auto;
-    min-height: 100px;
-    border-radius: 8px;
-    background: #f8fafc;
-    padding: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    min-width: 400px;
-}
-
-th, td {
-    padding: 12px 10px;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-    transition: all 0.3s;
-}
-
-th {
-    background: #4299e1;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-td {
-    background: white;
-    font-size: 0.95rem;
-    cursor: pointer;
-}
-
-tr:nth-child(even) td {
-    background: #f8fafc;
-}
-
-tr:hover td {
-    background: #ebf8ff;
-}
-
-td:active {
-    background: #4299e1 !important;
-    color: white;
-    transition: none;
-}
-
+/* دکمه‌ها */
 .btn {
     padding: 12px 24px;
     border: none;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-height: 44px;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn:hover {
@@ -381,95 +107,403 @@ td:active {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.btn:active {
-    transform: translateY(0);
-}
-
-.btn-block {
-    width: 100%;
-}
-
-.btn-primary {
-    background: #4299e1;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #3182ce;
-}
-
 .btn-success {
-    background: #48bb78;
+    background: #22c55e;
     color: white;
 }
 
 .btn-success:hover {
-    background: #38a169;
+    background: #16a34a;
 }
 
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+}
+
+/* پیام فرم */
 .message {
-    padding: 12px;
     margin-top: 15px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+}
+
+/* ماشین حساب */
+.calculator {
+    margin-top: 20px;
+}
+
+#calcDisplay {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.8rem;
+    text-align: right;
+    margin-bottom: 15px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
     border-radius: 8px;
+    font-weight: bold;
+    color: #2d3748;
+    direction: ltr; /* برای نمایش اعداد از چپ به راست */
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calc-buttons button {
+    padding: 18px 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #2d3748;
+}
+
+.calc-buttons button:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.calc-buttons button[data-operator] {
+    background: #3b82f6;
+    color: white;
+    border-color: #2563eb;
+}
+
+.calc-buttons button[data-operator]:hover {
+    background: #2563eb;
+}
+
+.calc-buttons button[data-action="clear"] {
+    background: #ef4444;
+    color: white;
+    border-color: #dc2626;
+}
+
+.calc-buttons button[data-action="clear"]:hover {
+    background: #dc2626;
+}
+
+.calc-buttons button[data-action="equals"] {
+    background: #22c55e;
+    color: white;
+    border-color: #16a34a;
+}
+
+.calc-buttons button[data-action="equals"]:hover {
+    background: #16a34a;
+}
+
+.calc-buttons button[data-action="backspace"] {
+    background: #f59e0b;
+    color: white;
+    border-color: #d97706;
+}
+
+.calc-buttons button[data-action="backspace"]:hover {
+    background: #d97706;
+}
+
+.wide {
+    grid-column: span 2;
+}
+
+.tall {
+    grid-row: span 2;
+}
+
+/* Table Generator */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.controls input {
+    width: 150px;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    flex: 1;
+    min-width: 120px;
+}
+
+.controls input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* جدول */
+#tableContainer {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    background: white;
+    margin: 0 -5px; /* برای جبران overflow */
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+/* سرستون‌ها */
+thead {
+    background-color: #2d3748;
+    color: white;
+}
+
+thead th {
+    padding: 18px 12px;
     text-align: center;
     font-weight: 600;
-    font-size: 0.9rem;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 14px;
+    border-right: 1px solid #4a5568;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
 }
 
-.footer {
+thead th:last-child {
+    border-right: none;
+}
+
+/* سلول‌های بدنه */
+tbody td {
+    padding: 16px 10px;
     text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    color: #4a5568;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    color: #2d3748;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
 }
 
-/*  تبلت */
-@media (min-width: 600px) {
-    .container {
-        padding: 15px;
-    }
+/* رنگ‌آمیزی متناوب سطرها */
+tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
 
-    .calc-buttons {
-        gap: 6px;
-    }
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
 
-    .calc-btn {
-        padding: 14px 0;
-        font-size: 1.2rem;
+/* هاور افکت */
+tbody tr:hover {
+    background-color: #f0f9ff;
+}
+
+tbody td:hover {
+    background-color: #e0f2fe;
+}
+
+/* انیمیشن هنگام ایجاد جدول */
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* دسکتاپ */
-@media (min-width: 900px) {
+tbody tr {
+    animation: fadeInRow 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+/* تاخیر برای هر سطر */
+tbody tr:nth-child(1) { animation-delay: 0.05s; }
+tbody tr:nth-child(2) { animation-delay: 0.1s; }
+tbody tr:nth-child(3) { animation-delay: 0.15s; }
+tbody tr:nth-child(4) { animation-delay: 0.2s; }
+tbody tr:nth-child(5) { animation-delay: 0.25s; }
+tbody tr:nth-child(6) { animation-delay: 0.3s; }
+tbody tr:nth-child(7) { animation-delay: 0.35s; }
+tbody tr:nth-child(8) { animation-delay: 0.4s; }
+tbody tr:nth-child(9) { animation-delay: 0.45s; }
+tbody tr:nth-child(10) { animation-delay: 0.5s; }
+tbody tr:nth-child(11) { animation-delay: 0.55s; }
+tbody tr:nth-child(12) { animation-delay: 0.6s; }
+tbody tr:nth-child(13) { animation-delay: 0.65s; }
+tbody tr:nth-child(14) { animation-delay: 0.7s; }
+tbody tr:nth-child(15) { animation-delay: 0.75s; }
+
+/* اطلاعات جدول */
+.table-info {
+    margin-top: 15px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+/* پیام خالی */
+.empty-message {
+    padding: 40px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 16px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 2px dashed #e2e8f0;
+    margin: 20px 0;
+}
+
+
+@media (max-width: 1200px) {
     .container {
+        max-width: 95%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 992px) {
+    .card {
         padding: 20px;
     }
 
-    .header {
-        padding: 30px;
+    .controls {
+        gap: 10px;
     }
 
-    .header h1 {
-        font-size: 2rem;
+    .controls input {
+        width: calc(50% - 10px);
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .col {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .controls input {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .controls button {
+        width: 100%;
     }
 
     .card {
-        padding: 25px;
+        padding: 15px;
     }
 
-    .calc-btn {
-        padding: 16px 0;
+    .card h2 {
         font-size: 1.3rem;
+        padding-bottom: 8px;
+    }
+
+    thead th {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+
+    tbody td {
+        padding: 12px 6px;
+        font-size: 12px;
+    }
+
+    .calc-buttons button {
+        padding: 15px 8px;
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 14px;
     }
 
     #calcDisplay {
-        height: 70px;
-        font-size: 2rem;
+        padding: 15px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .card h2 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    input {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .calc-buttons button {
+        padding: 12px 6px;
+        font-size: 0.9rem;
+    }
+
+    #tableContainer {
+        margin: 0 -2px;
+        padding: 2px;
+    }
+
+    table {
+        min-width: 100%;
+    }
+
+    thead th, tbody td {
+        padding: 8px 4px;
+        font-size: 11px;
     }
 }
